@@ -1,13 +1,50 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+   <div class="wrapper">
+      <Topheader></Topheader>
+      <div class="page-wrap">
+        <Sidebar></Sidebar>
+          <div class="main-content">
+            <div class="container-fluid">
+                <div id ="main_app">
+                </div>
+            </div>
+          </div>
+          <Rightsidebar></Rightsidebar>
+          <Chartpanel></Chartpanel>
+          <Footer></Footer>
+            
+      </div>
+     
+      <router-view/>
+    </div>
+    <Togglemenu></Togglemenu>
+    
   </div>
+
 </template>
 
 <script>
+import Sidebar from "./components/layouts/Sidebar";
+import Topheader from "./components/layouts/Topheader";
+import Rightsidebar from "./components/layouts/Rightsidebar";
+import Chartpanel from "./components/layouts/Chartpanel";
+import Footer from "./components/layouts/Footer";
+import Togglemenu from "./components/layouts/Togglemenu";
+
+
+
+
 export default {
-  name: 'App'
+  name: 'App',
+  components:{
+   Sidebar,
+   Topheader,
+   Rightsidebar,
+   Chartpanel,
+   Footer,
+   Togglemenu,
+  },
 }
 </script>
 
