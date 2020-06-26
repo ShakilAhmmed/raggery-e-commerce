@@ -100,11 +100,11 @@
     }
 .add_field_button{
     	margin-left: 20px;
-}   
+}
 
 #section_purchase{
 	    margin-left: 2%;
-} 
+}
 
 .tag{
 	background: #39849a;
@@ -183,11 +183,11 @@
     }
 .add_field_button{
     	margin-left: 20px;
-}   
+}
 
 #section_purchase{
 	    margin-left: 2%;
-} 
+}
 
 .tag{
 	background: #39849a;
@@ -235,7 +235,7 @@
     vertical-align: -4px  !important;
 }
 .wrapper .page-wrap .app-sidebar.colored .sidebar-header {
-    background-color: #dc00008c !important ;
+    background-color: #01a3a4 !important ;
 }
 .wrapper .page-wrap .app-sidebar .sidebar-header {
     display: -webkit-box !important;
@@ -296,12 +296,12 @@
     text-transform: capitalize !important;
     visibility: visible !important;
     width: 100% !important;
-    color: #ffe7e7 !important;
-    background: #0803037d !important;
+    color: #ffffff !important;
+    background: #16415a !important;
     text-align: center !important;
 }
 .ik {
-    font-family: iconkit!important;
+    font-family: iconkit !important;
     speak: none  !important;
     font-style: normal  !important;
     font-weight: 400  !important;
