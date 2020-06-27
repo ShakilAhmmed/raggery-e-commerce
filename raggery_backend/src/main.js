@@ -5,12 +5,23 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 import VueToastr2 from 'vue-toastr-2'
 import 'vue-toastr-2/dist/vue-toastr-2.min.css'
+import Paginate from 'vuejs-paginate';
+import Loading from 'vue-loading-overlay';
+// Import stylesheet
+import 'vue-loading-overlay/dist/vue-loading.css';
+// Init plugin
 
+Vue.component('paginate', Paginate);
 Vue.use(VueAxios, axios);
+ Vue.use(Loading,{
+   loader: 'dots',
+   backgroundColor: '#ffffff',
+ });
 window.toastr = require('toastr');
 Vue.use(VueToastr2);
 Vue.config.productionTip = false;
 window.basePath = "http://127.0.0.1:8000/api/v1/";
+window.perPage = 5;
 
 Vue.mixin({
   data() {
@@ -42,11 +53,11 @@ Vue.mixin({
       slug = slug.replace("'", '');
       return slug;
 
-    }
-    // LoadingStatus: function () {
-    //     this.$loading(true)
-    //     setTimeout(() => this.$loading(false), 200)
-    // },
+    },
+    Loader: function () {
+         let loader = this.$loading.show();
+        setTimeout(() => loader.hide(), 2000)
+    },
 
 
   }

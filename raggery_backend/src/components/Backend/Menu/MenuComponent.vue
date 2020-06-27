@@ -1,6 +1,7 @@
 <template>
   <div id="menu">
-    <button type="button" style="float: right;" class="btn btn-primary" data-toggle="modal" data-target="#demoModal">
+    <button type="button" class="modal_button btn btn-primary" data-toggle="modal"
+            data-target="#demoModal">
       Create Menu
     </button>
     <div class="modal fade" id="demoModal" tabindex="-1" role="dialog" aria-labelledby="demoModalLabel"
@@ -49,7 +50,72 @@
         </div>
       </div>
     </div>
+    <br>
+    <div>
+
+    </div>
+    <div class="card">
+      <div class="card-header d-block">
+        <div class="row">
+          <div class="col-md-1">
+            <div class="form-group">
+              <select class="form-control">
+                <option>1</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-9"></div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <input class="form-control"/>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body p-0 table-border-style">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>Sl No</th>
+              <th>Name</th>
+              <th>Slug</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(menu,index) in MenuList">
+              <th scope="row">{{index+1}}</th>
+              <td>{{menu.name}}</td>
+              <td>{{menu.slug}}</td>
+              <td>
+                <span v-if="menu.status === true" class="badge badge-pill badge-success mb-1">Active</span>
+                <span v-else class="badge badge-pill badge-danger mb-1">Inactive</span>
+              </td>
+              <td>@mdo</td>
+            </tr>
+
+            </tbody>
+          </table>
+          <paginate
+            :page-count="total_page"
+            :click-handler="paginate"
+            :prev-text="'Prev'"
+            :next-text="'Next'"
+            :container-class="'pagination'"
+            :page-link-class="'page-link'"
+            :prev-link-class="'page-link'"
+            :next-link-class="'page-link'"
+            :prev-class="'paginate_button page-item previous'"
+            :next-class="'paginate_button page-item next'"
+            :page-class="'paginate_button page-item'">
+          </paginate>
+        </div>
+      </div>
+    </div>
   </div>
+
 </template>
 
 <script>
@@ -62,10 +128,27 @@
           slug: '',
           status: ''
         },
-        AllError: []
+        AllError: [],
+        MenuList: [],
+        total_page: 0
       }
     },
     methods: {
+      paginate: function (pageNum) {
+        const _this = this;
+        _this.GetMenu(pageNum)
+      },
+      GetMenu: function (page = 1) {
+        const _this = this;
+        this.axios.get(basePath + "menu?page=" + page)
+          .then((response) => {
+            _this.MenuList = response.data.results;
+            _this.total_page = Math.ceil(response.data.count / perPage);
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      },
       AddMenu: function () {
         const _this = this;
         this.axios.post(basePath + "menu", _this.MenuForm)
@@ -88,6 +171,10 @@
         const _this = this;
         _this.MenuForm.slug = this.Slugify(event);
       }
+    },
+    created() {
+      this.Loader();
+      this.GetMenu();
     }
   }
 </script>
