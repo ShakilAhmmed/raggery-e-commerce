@@ -213,7 +213,12 @@
     right: 0;
     top: 0;
 } */
-
+.previous , .next{
+  width: 5%;
+}
+.modal_button {
+  float: right;margin-bottom: 2%;
+}
 .sidebar-header{
            background-color: #0d4e6d !important;
 }
