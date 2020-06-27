@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-
+    <h1>Graph Will Show Here</h1>
   </div>
 </template>
 

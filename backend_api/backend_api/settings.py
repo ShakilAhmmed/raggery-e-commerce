@@ -35,6 +35,7 @@ INSTALLED_APPS = [
 	'django.contrib.sessions',
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
+	'menu_app.apps.MenuAppConfig',
 	'rest_framework',
 	'corsheaders'
 ]
@@ -75,8 +76,11 @@ WSGI_APPLICATION = 'backend_api.wsgi.application'
 
 DATABASES = {
 	'default': {
-		'ENGINE': 'django.db.backends.sqlite3',
-		'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+		'ENGINE': 'django.db.backends.mysql',
+		'NAME': 'raggery',
+		'USER': 'root',
+		'PASSWORD': '',
+		'HOST': '127.0.01'
 	}
 }
 
@@ -116,5 +120,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 CORS_ORIGIN_WHITELIST = [
-	"http://localhost:8080"
+	"http://localhost:8080",
+	"http://127.0.0.1:8080"
 ]

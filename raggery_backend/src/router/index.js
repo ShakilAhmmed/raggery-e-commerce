@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
-import HelloWorld from "@/components/Dashboard";
-
+import Dashboard from "@/components/Dashboard";
+import MenuComponent from "@/components/Backend/Menu/MenuComponent";
 Vue.use(Router);
 
 export default new Router({
@@ -9,7 +9,22 @@ export default new Router({
     {
       path: "/",
       name: "Dashboard",
-      component: HelloWorld
+      component: Dashboard,
+      meta:{
+        "page_title" :"Dashboard",
+        "menu" :"Home",
+        "page_description":"Home",
+      }
+    },
+    {
+      path: "/menu",
+      name: "Menu",
+      component: MenuComponent,
+      meta:{
+        "page_title" :"Menu",
+        "menu" :"Settings",
+        "page_description":"Create Site Menu",
+      }
     }
   ]
 });

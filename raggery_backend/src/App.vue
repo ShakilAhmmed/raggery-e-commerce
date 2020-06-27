@@ -6,7 +6,9 @@
         <Sidebar></Sidebar>
         <div class="main-content">
           <div class="container-fluid">
+            <PageHead></PageHead>
             <div id="main_app">
+                <router-view/>
             </div>
           </div>
         </div>
@@ -16,7 +18,7 @@
 
       </div>
 
-      <router-view/>
+
     </div>
     <Togglemenu></Togglemenu>
 
@@ -31,6 +33,7 @@
   import Chartpanel from "./components/layouts/Chartpanel";
   import Footer from "./components/layouts/Footer";
   import Togglemenu from "./components/layouts/Togglemenu";
+  import PageHead from "./components/layouts/PageHeader";
 
 
   export default {
@@ -42,17 +45,9 @@
       Chartpanel,
       Footer,
       Togglemenu,
+      PageHead
     },
   }
 </script>
 
-<style>
-  #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
-  }
-</style>
+
