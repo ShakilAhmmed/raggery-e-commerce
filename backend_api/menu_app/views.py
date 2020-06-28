@@ -1,6 +1,7 @@
+from rest_framework.generics import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_400_BAD_REQUEST
+from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_202_ACCEPTED
 
 from .models import Menu
 from .serializers import MenuSerializer
@@ -32,3 +33,23 @@ class MenuApi(APIView, PaginationHandlerMixin):
 			response['errors'] = serialize.errors
 			response['status'] = HTTP_400_BAD_REQUEST
 		return Response(response, status = response['status'])
+
+	def patch(self, request, pk):
+		instance = get_object_or_404(Menu, pk = pk)
+		response = {}
+		if instance.status:
+			instance.status = False
+			response['message'] = "Status Changed Into Inactive"
+			response['type'] = False
+		else:
+			instance.status = True
+			response['message'] = "Status Changed Into Active"
+			response['type'] = True
+		instance.save()
+		return Response(response, status = HTTP_202_ACCEPTED)
+
+	def delete(self, request, pk):
+		instance = get_object_or_404(Menu, pk = pk)
+		instance.delete()
+		response = {"message": "deleted"}
+		return Response(response, status = HTTP_202_ACCEPTED)

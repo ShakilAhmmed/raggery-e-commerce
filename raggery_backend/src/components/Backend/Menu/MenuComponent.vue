@@ -93,7 +93,20 @@
                 <span v-if="menu.status === true" class="badge badge-pill badge-success mb-1">Active</span>
                 <span v-else class="badge badge-pill badge-danger mb-1">Inactive</span>
               </td>
-              <td>@mdo</td>
+              <td>
+                <button class="btn btn-danger" @click="deleteMenu(index,menu.id)">
+                  <font-awesome-icon icon="trash"/>
+                </button>
+                <button @click="statusChange(menu.id)"
+                        :class="menu.status === true ? 'btn btn-success' : 'btn btn-warning'">
+                  <font-awesome-icon v-if="menu.status === true" icon="check-circle"/>
+                  <font-awesome-icon v-else icon="times-circle"/>
+                </button>
+
+                <button class="btn btn-primary">
+                  <font-awesome-icon icon="pencil-alt"/>
+                </button>
+              </td>
             </tr>
 
             </tbody>
@@ -154,6 +167,7 @@
         this.axios.post(basePath + "menu", _this.MenuForm)
           .then((response) => {
             this.$toastr.success('New Menu Added Successfully!', 'Success');
+            _this.GetMenu();
             _this.Reset();
           })
           .catch((error) => {
@@ -162,10 +176,49 @@
       },
       Reset: function () {
         const _this = this;
+        $("#demoModal").modal('hide');
         _this.AllError = []
         Object.keys(_this.MenuForm).forEach(function (key, index) {
           _this.MenuForm[key] = '';
         });
+      },
+      deleteMenu: function (index, menu_id) {
+        const _this = this;
+        this.$swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.value) {
+            this.axios.delete(basePath + "menu/delete/" + menu_id)
+              .then((response) => {
+                console.log(response)
+                _this.MenuList.splice(index, 1);
+                this.$swal.fire('Deleted!', 'Menu Deleted Successfully', 'success');
+              })
+              .catch((error) => {
+                console.log(error)
+              })
+          }
+        })
+      },
+      statusChange: function (menu_id) {
+        const _this = this;
+        this.axios.patch(basePath + "menu/status/" + menu_id)
+          .then((response) => {
+            _this.GetMenu();
+            if (response.data.type === true) {
+              this.$toastr.success(response.data.message, 'Success');
+            } else {
+              this.$toastr.warning(response.data.message, 'Success');
+            }
+          })
+          .catch((error) => {
+            console.log(error)
+          })
       },
       MakeMenuSlug: function (event) {
         const _this = this;
