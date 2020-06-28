@@ -9,14 +9,27 @@ import Paginate from 'vuejs-paginate';
 import Loading from 'vue-loading-overlay';
 // Import stylesheet
 import 'vue-loading-overlay/dist/vue-loading.css';
+import "font-awesome/css/font-awesome.min.css";
 // Init plugin
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+import {library} from '@fortawesome/fontawesome-svg-core';
+import {faSpinner, faTrash, faCheckCircle , faTimesCircle , faPencilAlt} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
+
+library.add(faSpinner, faTrash, faCheckCircle , faTimesCircle , faPencilAlt)
+Vue.component('font-awesome-icon', FontAwesomeIcon)
+
 
 Vue.component('paginate', Paginate);
+
+
 Vue.use(VueAxios, axios);
- Vue.use(Loading,{
-   loader: 'dots',
-   backgroundColor: '#ffffff',
- });
+Vue.use(VueSweetalert2);
+Vue.use(Loading, {
+  loader: 'dots',
+  backgroundColor: '#ffffff',
+});
 window.toastr = require('toastr');
 Vue.use(VueToastr2);
 Vue.config.productionTip = false;
@@ -55,8 +68,8 @@ Vue.mixin({
 
     },
     Loader: function () {
-         let loader = this.$loading.show();
-        setTimeout(() => loader.hide(), 2000)
+      let loader = this.$loading.show();
+      setTimeout(() => loader.hide(), 2000)
     },
 
 
