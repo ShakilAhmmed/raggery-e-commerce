@@ -50,6 +50,56 @@
         </div>
       </div>
     </div>
+
+
+    <div class="modal fade" id="menuEditModal" tabindex="-1" role="dialog" aria-labelledby="demoModalLabel"
+         aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="menuEditLabel">Create Menu</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
+          </div>
+          <form class="forms-sample" @submit.prevent="EditMenu">
+            <div class="modal-body">
+              <div class="card">
+                <div class="card-body">
+
+                  <div class="form-group">
+                    <label for="editInputName">Name</label>
+                    <input type="text" v-model="EditMenuForm.name" @keyup="MakeMenuSlug($event,true)"
+                           class="form-control"
+                           id="editInputName">
+                    <span class="mt-5 text-danger" v-if="AllError.name" v-text="AllError.name[0]"></span>
+                  </div>
+                  <div class="form-group">
+                    <label for="editInputSlug">Slug</label>
+                    <input type="text" v-model="EditMenuForm.slug" class="form-control" id="editInputSlug" readonly>
+                    <span class="mt-5 text-danger" v-if="AllError.slug" v-text="AllError.slug[0]"></span>
+                  </div>
+                  <div class="form-group">
+                    <label for="editInputStatus">Status</label>
+                    <select id="editInputStatus" class="form-control" v-model="EditMenuForm.status">
+                      <option value="" disabled>Select</option>
+                      <option value="1">Active</option>
+                      <option value="0">Inactive</option>
+                    </select>
+                    <span class="mt-5 text-danger" v-if="AllError.status" v-text="AllError.status[0]"></span>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary mr-2">Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
     <br>
     <div>
 
@@ -59,15 +109,17 @@
         <div class="row">
           <div class="col-md-1">
             <div class="form-group">
-              <select class="form-control">
-                <option>1</option>
-              </select>
+              <label>
+                <select class="form-control limit" v-model="limit">
+                  <option v-for="limit_value in limits"> {{ limit_value }}</option>
+                </select>
+              </label>
             </div>
           </div>
           <div class="col-md-9"></div>
           <div class="col-md-2">
             <div class="form-group">
-              <input class="form-control"/>
+              <input v-model="search_key" class="form-control"/>
             </div>
           </div>
         </div>
@@ -103,7 +155,8 @@
                   <font-awesome-icon v-else icon="times-circle"/>
                 </button>
 
-                <button class="btn btn-primary">
+                <button class="btn btn-primary" data-toggle="modal"
+                        data-target="#menuEditModal" @click="viewMenu(menu.id)">
                   <font-awesome-icon icon="pencil-alt"/>
                 </button>
               </td>
@@ -141,9 +194,26 @@
           slug: '',
           status: ''
         },
+        EditMenuForm: {
+          id: '',
+          name: '',
+          slug: '',
+          status: ''
+        },
         AllError: [],
         MenuList: [],
-        total_page: 0
+        total_page: 0,
+        search_key: '',
+        limit: 5,
+        limits: limitOption
+      }
+    },
+    watch: {
+      'search_key': function () {
+        this.GetMenu();
+      },
+      'limit': function () {
+        this.GetMenu();
       }
     },
     methods: {
@@ -153,10 +223,10 @@
       },
       GetMenu: function (page = 1) {
         const _this = this;
-        this.axios.get(basePath + "menu?page=" + page)
+        this.axios.get(basePath + "menu?limit=" + _this.limit + "&page=" + page + "&q=" + _this.search_key)
           .then((response) => {
             _this.MenuList = response.data.results;
-            _this.total_page = Math.ceil(response.data.count / perPage);
+            _this.total_page = Math.ceil(response.data.count / _this.limit);
           })
           .catch((error) => {
             console.log(error)
@@ -164,23 +234,47 @@
       },
       AddMenu: function () {
         const _this = this;
-        this.axios.post(basePath + "menu", _this.MenuForm)
+        this.axios.post(basePath + "menu/", _this.MenuForm)
           .then((response) => {
             this.$toastr.success('New Menu Added Successfully!', 'Success');
             _this.GetMenu();
-            _this.Reset();
+            _this.Reset("demoModal", _this.MenuForm);
           })
           .catch((error) => {
             _this.AllError = error.response.data.errors;
           })
       },
-      Reset: function () {
+      EditMenu: function () {
         const _this = this;
-        $("#demoModal").modal('hide');
+        this.axios.put(basePath + "menu/" + _this.EditMenuForm.id, _this.EditMenuForm)
+          .then((response) => {
+            console.log(response);
+            this.$toastr.success('Menu Updated Successfully!', 'Success');
+            _this.GetMenu();
+            _this.Reset("menuEditModal", _this.EditMenuForm);
+          })
+          .catch((error) => {
+            _this.AllError = error.response.data.errors;
+          })
+      },
+      Reset: function (modal_name, form) {
+        const _this = this;
+        $("#" + modal_name).modal('hide');
         _this.AllError = []
-        Object.keys(_this.MenuForm).forEach(function (key, index) {
-          _this.MenuForm[key] = '';
+        Object.keys(form).forEach(function (key, index) {
+          form[key] = '';
         });
+      },
+      viewMenu: function (menu_id) {
+        const _this = this;
+        this.axios.get(basePath + "menu/" + menu_id)
+          .then((response) => {
+            _this.EditMenuForm = response.data;
+            _this.EditMenuForm.status = response.data.status === true ? 1 : 0;
+          })
+          .catch((error) => {
+            console.log(error)
+          })
       },
       deleteMenu: function (index, menu_id) {
         const _this = this;
@@ -220,9 +314,14 @@
             console.log(error)
           })
       },
-      MakeMenuSlug: function (event) {
+      MakeMenuSlug: function (event, is_update = false) {
         const _this = this;
-        _this.MenuForm.slug = this.Slugify(event);
+        if (is_update === true) {
+          _this.EditMenuForm.slug = this.Slugify(event);
+        } else {
+          _this.MenuForm.slug = this.Slugify(event);
+        }
+
       }
     },
     created() {

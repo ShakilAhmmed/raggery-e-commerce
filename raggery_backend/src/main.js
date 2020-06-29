@@ -14,10 +14,10 @@ import "font-awesome/css/font-awesome.min.css";
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import {library} from '@fortawesome/fontawesome-svg-core';
-import {faSpinner, faTrash, faCheckCircle , faTimesCircle , faPencilAlt} from '@fortawesome/free-solid-svg-icons';
+import {faSpinner, faTrash, faCheckCircle, faTimesCircle, faPencilAlt} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 
-library.add(faSpinner, faTrash, faCheckCircle , faTimesCircle , faPencilAlt)
+library.add(faSpinner, faTrash, faCheckCircle, faTimesCircle, faPencilAlt)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 
@@ -29,12 +29,13 @@ Vue.use(VueSweetalert2);
 Vue.use(Loading, {
   loader: 'dots',
   backgroundColor: '#ffffff',
+  color: '#8e44ad'
 });
 window.toastr = require('toastr');
 Vue.use(VueToastr2);
 Vue.config.productionTip = false;
 window.basePath = "http://127.0.0.1:8000/api/v1/";
-window.perPage = 5;
+window.limitOption = [5, 10, 15, 20, 25];
 
 Vue.mixin({
   data() {
