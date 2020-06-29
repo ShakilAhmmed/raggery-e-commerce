@@ -213,6 +213,9 @@
     right: 0;
     top: 0;
 } */
+.limit {
+      width: 85px;
+}
 .previous , .next{
   width: 5%;
 }

@@ -47,6 +47,9 @@
       Togglemenu,
       PageHead
     },
+    created() {
+      this.Loader();
+    }
   }
 </script>
 
