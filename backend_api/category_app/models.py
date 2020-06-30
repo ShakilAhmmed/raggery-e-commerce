@@ -1,9 +1,12 @@
 from django.db import models
 
+from menu_app.models import Menu
+
 
 # Create your models here.
-class Menu(models.Model):
-	name = models.CharField(max_length = 50, unique = True)
+class Category(models.Model):
+	menu = models.ForeignKey(Menu, on_delete = models.CASCADE, related_name = "categories")
+	name = models.CharField(max_length = 100, unique = True)
 	slug = models.CharField(max_length = 50, unique = True)
 	status = models.BooleanField(default = 0)
 	created_at = models.DateTimeField(auto_now_add = True)
@@ -12,6 +15,5 @@ class Menu(models.Model):
 	def __str__(self):
 		return self.name
 
-	# created_by = models.ForeignKey(null = True, blank = True)
 	class Meta:
-		db_table = "menus"
+		db_table = "categories"
