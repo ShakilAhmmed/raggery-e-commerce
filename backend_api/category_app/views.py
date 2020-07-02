@@ -21,7 +21,8 @@ class CategoryApi(APIView, PaginationHandlerMixin):
 			instance = Category.objects.all()
 			filter_by = request.GET.get('q', None)
 			if filter_by is not None:
-				instance = instance.filter(Q(name__contains = filter_by) | Q(slug__contains = filter_by))
+				instance = instance.filter(
+					Q(name__icontains = filter_by) | Q(slug__icontains = filter_by) | Q(menu__name__icontains = filter_by))
 			page = self.paginate_queryset(instance)
 			if page is not None:
 				serializer = self.get_paginated_response(self.serializer_class(page, many = True).data)

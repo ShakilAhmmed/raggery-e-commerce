@@ -1,4 +1,4 @@
-from rest_framework.generics import get_object_or_404
+from rest_framework.generics import get_object_or_404, ListAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_202_ACCEPTED
@@ -19,7 +19,7 @@ class MenuApi(APIView, PaginationHandlerMixin):
 			instance = Menu.objects.all()
 			filter_by = request.GET.get('q', None)
 			if filter_by is not None:
-				instance = instance.filter(Q(name__contains = filter_by) | Q(slug__contains = filter_by))
+				instance = instance.filter(Q(name__icontains = filter_by) | Q(slug__icontains = filter_by))
 			page = self.paginate_queryset(instance)
 			if page is not None:
 				serializer = self.get_paginated_response(self.serializer_class(page, many = True).data)
@@ -75,3 +75,8 @@ class MenuApi(APIView, PaginationHandlerMixin):
 		instance.delete()
 		response = {"message": "deleted"}
 		return Response(response, status = HTTP_202_ACCEPTED)
+
+
+class GetMenu(ListAPIView):
+	serializer_class = MenuSerializer
+	queryset = Menu.objects.filter(status = 1)

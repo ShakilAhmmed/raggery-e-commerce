@@ -1,7 +1,9 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Dashboard from "@/components/Dashboard";
-import MenuComponent from "@/components/Backend/Menu/MenuComponent";
+import Dashboard from "../components/Dashboard";
+import MenuComponent from "../components/Backend/Menu/MenuComponent";
+import CategoryComponent from "../components/Backend/Category/CategoryComponent";
+
 Vue.use(Router);
 
 export default new Router({
@@ -10,20 +12,30 @@ export default new Router({
       path: "/",
       name: "Dashboard",
       component: Dashboard,
-      meta:{
-        "page_title" :"Dashboard",
-        "menu" :"Home",
-        "page_description":"Home",
+      meta: {
+        "page_title": "Dashboard",
+        "menu": "Home",
+        "page_description": "Home",
       }
     },
     {
       path: "/menu",
       name: "Menu",
       component: MenuComponent,
-      meta:{
-        "page_title" :"Menu",
-        "menu" :"Settings",
-        "page_description":"Create Site Menu",
+      meta: {
+        "page_title": "Menu",
+        "menu": "Settings",
+        "page_description": "Create Site Menu",
+      }
+    },
+    {
+      path: "/category",
+      name: "CategoryComponent",
+      component: CategoryComponent,
+      meta: {
+        "page_title": "Category",
+        "menu": "Settings",
+        "page_description": "Create Site Category",
       }
     }
   ]
