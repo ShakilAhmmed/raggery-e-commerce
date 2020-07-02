@@ -53,3 +53,4 @@ class MenuApi(APIView, PaginationHandlerMixin):
 		instance.delete()
 		response = {"message": "deleted"}
 		return Response(response, status = HTTP_202_ACCEPTED)
+

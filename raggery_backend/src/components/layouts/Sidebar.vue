@@ -23,6 +23,13 @@
                 <div class="nav-item">
                     <a href="pages/navbar.html"><i class="ik ik-menu"></i><span>Navigation</span> <span class="badge badge-success">New</span></a>
                 </div>
+                 <div class="nav-item has-sub">
+                    <a href="javascript:void(0)"><i class="ik ik-layers"></i><span>Product</span> <span class="badge badge-danger">150+</span></a>
+                    <div class="submenu-content">
+                        <router-link to="/color" class="menu-item">Color</router-link>
+
+                    </div>
+                </div>
                 <div class="nav-item has-sub">
                     <a href="javascript:void(0)"><i class="ik ik-layers"></i><span>Settings</span> <span class="badge badge-danger">150+</span></a>
                     <div class="submenu-content">
@@ -30,6 +37,7 @@
 
                     </div>
                 </div>
+               
 <!--                <div class="nav-lavel">UI Element</div>-->
 <!--                <div class="nav-item has-sub">-->
 <!--                    <a href="#"><i class="ik ik-box"></i><span>Basic</span></a>-->

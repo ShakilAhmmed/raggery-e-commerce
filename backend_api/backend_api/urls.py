@@ -21,4 +21,5 @@ urlpatterns = [
 	path('admin/', admin.site.urls),
 	path('api/v1/hello', views.Hello.as_view()),
 	path('api/v1/menu', include("menu_app.urls")),
+    path('api/v1/color', include("color_app.urls")),
 ]
