@@ -3,7 +3,7 @@ import Router from "vue-router";
 import Dashboard from "../components/Dashboard";
 import MenuComponent from "../components/Backend/Menu/MenuComponent";
 import CategoryComponent from "../components/Backend/Category/CategoryComponent";
-
+import ColorComponent from "@/components/Backend/Menu/ColorComponent";
 Vue.use(Router);
 
 export default new Router({
@@ -36,6 +36,16 @@ export default new Router({
         "page_title": "Category",
         "menu": "Settings",
         "page_description": "Create Site Category",
+      }
+    },
+    {
+      path: "/color",
+      name : "Color",
+      component: ColorComponent,
+      meta:{
+        "page_title" :"Color",
+        "menu" :"product",
+        "page_description":"Create Site Color",
       }
     }
   ]

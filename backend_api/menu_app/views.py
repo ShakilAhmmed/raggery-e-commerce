@@ -76,7 +76,7 @@ class MenuApi(APIView, PaginationHandlerMixin):
 		response = {"message": "deleted"}
 		return Response(response, status = HTTP_202_ACCEPTED)
 
-
 class GetMenu(ListAPIView):
 	serializer_class = MenuSerializer
 	queryset = Menu.objects.filter(status = 1)
+

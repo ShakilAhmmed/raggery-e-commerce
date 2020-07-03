@@ -16,6 +16,7 @@
 
       <div class="sidebar-content">
         <div class="nav-container">
+
           <nav id="main-menu-navigation" class="navigation-main">
             <div class="nav-lavel">Navigation</div>
             <div class="nav-item active">
@@ -31,10 +32,12 @@
               <div class="submenu-content">
                 <router-link to="/menu" class="menu-item">Menu</router-link>
                 <router-link to="/category" class="menu-item">Category</router-link>
-
+                <router-link to="/color" class="menu-item">Color</router-link>
               </div>
             </div>
           </nav>
+
+
         </div>
       </div>
     </div>
