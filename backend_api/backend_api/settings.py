@@ -37,6 +37,7 @@ INSTALLED_APPS = [
 	'django.contrib.staticfiles',
 	'menu_app.apps.MenuAppConfig',
 	'category_app.apps.CategoryAppConfig',
+	'color_app',
 	'rest_framework',
 	'corsheaders',
 	'drf_yasg',
