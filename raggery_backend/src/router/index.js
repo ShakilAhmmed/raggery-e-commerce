@@ -4,6 +4,8 @@ import Dashboard from "../components/Dashboard";
 import MenuComponent from "../components/Backend/Menu/MenuComponent";
 import CategoryComponent from "../components/Backend/Category/CategoryComponent";
 import ColorComponent from "@/components/Backend/Menu/ColorComponent";
+import SubCategoryComponent from "../components/Backend/SubCategory/SubCategoryComponent";
+
 Vue.use(Router);
 
 export default new Router({
@@ -39,13 +41,23 @@ export default new Router({
       }
     },
     {
+      path: "/sub_category",
+      name: "Sub Category",
+      component: SubCategoryComponent,
+      meta: {
+        "page_title": "Sub Category",
+        "menu": "Settings",
+        "page_description": "Create Site Sub Category",
+      }
+    },
+    {
       path: "/color",
-      name : "Color",
+      name: "Color",
       component: ColorComponent,
-      meta:{
-        "page_title" :"Color",
-        "menu" :"product",
-        "page_description":"Create Site Color",
+      meta: {
+        "page_title": "Color",
+        "menu": "product",
+        "page_description": "Create Site Color",
       }
     }
   ]
