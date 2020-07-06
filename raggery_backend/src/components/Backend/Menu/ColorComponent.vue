@@ -27,8 +27,8 @@
                   <div class="form-group">
                     <label for="exampleInputCode">Code</label>
                     <input type="text" v-model="ColorForm.code" class="form-control" >
-                    <span class="mt-5 text-danger" v-if="AllError.code" v-text="AllError.code[0]"></span> 
-                  
+                    <span class="mt-5 text-danger" v-if="AllError.code" v-text="AllError.code[0]"></span>
+
                   </div>
                   <div class="form-group">
                     <label for="exampleInputStatus">Status</label>
@@ -104,7 +104,7 @@
                   <font-awesome-icon v-else icon="times-circle"/>
                 </button>
 
-              
+
                 <button class="btn btn-primary" data-toggle="modal"
                         data-target="#demoModal" @click="viewMenu(color.id)">
                   <font-awesome-icon icon="pencil-alt"/>
@@ -170,7 +170,7 @@
         const _this = this;
         if(_this.ColorForm.id == ''){
           console.log(_this.ColorForm);
-          this.axios.post(basePath + "color", _this.ColorForm)
+          this.axios.post(basePath + "color/", _this.ColorForm)
           .then((response) => {
           console.log(response)
             this.$toastr.success('New Menu Added Successfully!', 'Success');
@@ -184,7 +184,7 @@
           })
         }
         else{
-          
+
           this.axios.put(basePath + "color/" + _this.ColorForm.id, _this.ColorForm)
           .then((response) => {
             this.$toastr.success('Color Updated Successfully!', 'Success');
@@ -195,7 +195,7 @@
             _this.AllError = error.response.data.errors;
           })
 
-        } 
+        }
       },
       viewMenu: function (color_pk) {
         const _this = this;
@@ -223,9 +223,9 @@
         Object.keys(form).forEach(function (key, index) {
           form[key] = '';
         });
-        
+
       },
- 
+
       DeleteColor: function (index, color_pk) {
         const _this = this;
         this.$swal.fire({
@@ -251,7 +251,7 @@
       statusChange: function (color_pk) {
         const _this = this;
         this.axios.patch(basePath + "color/status/" + color_pk)
-          .then((response) => {     
+          .then((response) => {
             _this.GetColor();
             if (response.data.type === true) {
               this.$toastr.success(response.data.message, 'Success');
@@ -264,7 +264,7 @@
           })
       }
     },
-    
+
 
     created() {
       this.Loader();
