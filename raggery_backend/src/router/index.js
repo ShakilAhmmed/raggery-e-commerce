@@ -5,6 +5,7 @@ import MenuComponent from "../components/Backend/Menu/MenuComponent";
 import CategoryComponent from "../components/Backend/Category/CategoryComponent";
 import ColorComponent from "@/components/Backend/Menu/ColorComponent";
 import SubCategoryComponent from "../components/Backend/SubCategory/SubCategoryComponent";
+import TreeView from "../components/Backend/TreeView/TreeView";
 
 Vue.use(Router);
 
@@ -48,6 +49,16 @@ export default new Router({
         "page_title": "Sub Category",
         "menu": "Settings",
         "page_description": "Create Site Sub Category",
+      }
+    },
+    {
+      path: "/tree_view",
+      name: "Tree View",
+      component: TreeView,
+      meta: {
+        "page_title": "Tree View",
+        "menu": "Settings",
+        "page_description": "Tree View",
       }
     },
     {

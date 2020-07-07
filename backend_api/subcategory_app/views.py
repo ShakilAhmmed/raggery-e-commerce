@@ -1,4 +1,4 @@
-from rest_framework.generics import get_object_or_404
+from rest_framework.generics import get_object_or_404, ListAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_202_ACCEPTED
@@ -86,3 +86,8 @@ class SubCategoryApi(APIView, PaginationHandlerMixin):
 		instance.delete()
 		response = {"message": "deleted"}
 		return Response(response, status = HTTP_202_ACCEPTED)
+
+
+class GetSubCategoryApi(ListAPIView):
+	serializer_class = SubCategorySerializer
+	queryset = SubCategory.objects.filter(status = 1)
