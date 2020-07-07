@@ -33,6 +33,7 @@
                 <router-link to="/menu" class="menu-item">Menu</router-link>
                 <router-link to="/category" class="menu-item">Category</router-link>
                 <router-link to="/sub_category" class="menu-item">Sub Category</router-link>
+                <router-link to="/tree_view" class="menu-item">View</router-link>
                 <router-link to="/color" class="menu-item">Color</router-link>
               </div>
             </div>

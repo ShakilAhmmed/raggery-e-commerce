@@ -14,10 +14,10 @@ import "font-awesome/css/font-awesome.min.css";
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import {library} from '@fortawesome/fontawesome-svg-core';
-import {faSpinner, faTrash, faCheckCircle, faTimesCircle, faPencilAlt} from '@fortawesome/free-solid-svg-icons';
+import {faSpinner, faTrash, faCheckCircle, faTimesCircle, faPencilAlt, faFolderOpen , faFolder , faCube} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 
-library.add(faSpinner, faTrash, faCheckCircle, faTimesCircle, faPencilAlt)
+library.add(faSpinner, faTrash, faCheckCircle, faTimesCircle, faPencilAlt,faFolderOpen,faFolder ,faCube)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 
