@@ -37,6 +37,14 @@
                 <router-link to="/color" class="menu-item">Color</router-link>
               </div>
             </div>
+
+            <div class="nav-item has-sub">
+              <a href="javascript:void(0)"><i class="ik ik-layers"></i><span>Address Settings</span> <span
+                class="badge badge-danger">150+</span></a>
+              <div class="submenu-content">
+                <router-link to="/division" class="menu-item">Division</router-link>
+              </div>
+            </div>
           </nav>
 
 
