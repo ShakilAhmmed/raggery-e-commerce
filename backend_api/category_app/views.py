@@ -1,7 +1,8 @@
 from rest_framework.generics import get_object_or_404, ListAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_202_ACCEPTED
+from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_202_ACCEPTED, \
+	HTTP_204_NO_CONTENT
 
 from .models import Category
 from .serializers import CategorySerializer
@@ -81,7 +82,7 @@ class CategoryApi(APIView, PaginationHandlerMixin):
 		instance = get_object_or_404(Category, pk = pk)
 		instance.delete()
 		response = {"message": "deleted"}
-		return Response(response, status = HTTP_202_ACCEPTED)
+		return Response(response, status = HTTP_204_NO_CONTENT)
 
 
 class GetCategoryApi(ListAPIView):

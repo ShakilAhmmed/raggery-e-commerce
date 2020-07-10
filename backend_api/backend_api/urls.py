@@ -40,6 +40,7 @@ urlpatterns = [
 	path('api/v1/category/', include("category_app.urls")),
 	path('api/v1/color/', include("color_app.urls")),
 	path('api/v1/subcategory/', include("subcategory_app.urls")),
+	path('api/v1/address/', include("address_app.urls")),
 	re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout = 0), name = 'schema-json'),
 	re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout = 0), name = 'schema-swagger-ui'),
 	re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout = 0), name = 'schema-redoc'),

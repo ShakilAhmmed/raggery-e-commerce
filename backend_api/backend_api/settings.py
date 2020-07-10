@@ -38,6 +38,7 @@ INSTALLED_APPS = [
 	'menu_app.apps.MenuAppConfig',
 	'category_app.apps.CategoryAppConfig',
 	'subcategory_app.apps.SubcategoryAppConfig',
+	'address_app.apps.AddressAppConfig',
 	'color_app',
 	'rest_framework',
 	'corsheaders',

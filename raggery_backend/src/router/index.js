@@ -6,6 +6,7 @@ import CategoryComponent from "../components/Backend/Category/CategoryComponent"
 import ColorComponent from "@/components/Backend/Menu/ColorComponent";
 import SubCategoryComponent from "../components/Backend/SubCategory/SubCategoryComponent";
 import TreeView from "../components/Backend/TreeView/TreeView";
+import Division from "../components/Backend/Address/Division";
 
 Vue.use(Router);
 
@@ -59,6 +60,16 @@ export default new Router({
         "page_title": "Tree View",
         "menu": "Settings",
         "page_description": "Tree View",
+      }
+    },
+    {
+      path: "/division",
+      name: "Division",
+      component: Division,
+      meta: {
+        "page_title": "Division",
+        "menu": "Address Settings",
+        "page_description": "Division",
       }
     },
     {
