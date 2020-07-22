@@ -7,6 +7,7 @@ import ColorComponent from "@/components/Backend/Menu/ColorComponent";
 import SubCategoryComponent from "../components/Backend/SubCategory/SubCategoryComponent";
 import TreeView from "../components/Backend/TreeView/TreeView";
 import Division from "../components/Backend/Address/Division";
+import District from "../components/Backend/Address/District";
 
 Vue.use(Router);
 
@@ -70,6 +71,16 @@ export default new Router({
         "page_title": "Division",
         "menu": "Address Settings",
         "page_description": "Division",
+      }
+    },
+    {
+      path: "/district",
+      name: "District",
+      component: District,
+      meta: {
+        "page_title": "District",
+        "menu": "Address Settings",
+        "page_description": "District",
       }
     },
     {
