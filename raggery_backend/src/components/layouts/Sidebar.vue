@@ -43,6 +43,7 @@
                 class="badge badge-danger">150+</span></a>
               <div class="submenu-content">
                 <router-link to="/division" class="menu-item">Division</router-link>
+                <router-link to="/district" class="menu-item">District</router-link>
               </div>
             </div>
           </nav>
