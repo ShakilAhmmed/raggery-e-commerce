@@ -87,7 +87,8 @@
 
                   <div class="form-group">
                     <label for="editInputMenu">Menu</label>
-                    <select type="text" v-model="EditSubCategoryForm.menu_id" @change="getCategory" class="form-control"
+                    <select type="text" v-model="EditSubCategoryForm.menu_id" @change="getCategory(true)"
+                            class="form-control"
                             id="editInputMenu">
                       <option v-for="(menu, index) in Menu" :value="menu.id" v-text="menu.name"></option>
                     </select>
@@ -280,9 +281,10 @@
             console.log(error)
           })
       },
-      getCategory: function () {
+      getCategory: function (is_update = false) {
         const _this = this;
-        this.axios.get(basePath + "category/menu_wise_category/" + _this.SubCategoryForm.menu_id)
+        let column = is_update === true ? _this.EditSubCategoryForm.menu_id : _this.SubCategoryForm.menu_id;
+        this.axios.get(basePath + "category/menu_wise_category/" + column)
           .then((response) => {
             _this.Category = response.data;
           })
@@ -341,6 +343,7 @@
             console.log(response);
             _this.EditSubCategoryForm = response.data;
             _this.EditSubCategoryForm.menu_id = response.data.menu.id;
+            _this.getCategory(true);
             _this.EditSubCategoryForm.category_id = response.data.category.id;
             _this.EditSubCategoryForm.status = response.data.status === true ? 1 : 0;
           })

@@ -8,6 +8,7 @@ import SubCategoryComponent from "../components/Backend/SubCategory/SubCategoryC
 import TreeView from "../components/Backend/TreeView/TreeView";
 import Division from "../components/Backend/Address/Division";
 import District from "../components/Backend/Address/District";
+import SubDistrict from "../components/Backend/Address/SubDistrict";
 
 Vue.use(Router);
 
@@ -79,6 +80,16 @@ export default new Router({
       component: District,
       meta: {
         "page_title": "District",
+        "menu": "Address Settings",
+        "page_description": "District",
+      }
+    },
+    {
+      path: "/sub_district",
+      name: "Sub District",
+      component: SubDistrict,
+      meta: {
+        "page_title": "Sub District",
         "menu": "Address Settings",
         "page_description": "District",
       }
