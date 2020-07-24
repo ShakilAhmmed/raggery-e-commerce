@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views, district_views
+from . import views, district_views, sub_district_views
 
 app_name = "address"
 
@@ -17,4 +17,13 @@ urlpatterns = [
 	path("district/delete/<int:pk>", district_views.DistrictApi.as_view()),
 	path("district/status/<int:pk>", district_views.DistrictApi.as_view()),
 	path("district/<int:pk>", district_views.DistrictApi.as_view()),
+	path("division_wise_district/<int:division>", district_views.GetDivisionWiseDistrictApi.as_view()),
+
+	# sub_district
+
+	path("sub_district/", sub_district_views.SubDistrictApi.as_view()),
+	path("all_sub_district/", sub_district_views.GetAllSubDistrictApi.as_view()),
+	path("sub_district/delete/<int:pk>", sub_district_views.SubDistrictApi.as_view()),
+	path("sub_district/status/<int:pk>", sub_district_views.SubDistrictApi.as_view()),
+	path("sub_district/<int:pk>", sub_district_views.SubDistrictApi.as_view()),
 ]

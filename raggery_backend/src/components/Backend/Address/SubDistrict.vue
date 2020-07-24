@@ -2,36 +2,57 @@
   <div id="menu">
     <button type="button" class="modal_button btn btn-primary" data-toggle="modal"
             data-target="#demoModal">
-      Create Division
+      Create Sub District
     </button>
     <div class="modal fade" id="demoModal" tabindex="-1" role="dialog" aria-labelledby="demoModalLabel"
          aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="demoModalLabel">Create Division</h5>
+            <h5 class="modal-title" id="demoModalLabel">Create Sub District</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
               aria-hidden="true">&times;</span></button>
           </div>
-          <form class="forms-sample" @submit.prevent="AddDivision">
+          <form class="forms-sample" @submit.prevent="AddSubDistrict">
             <div class="modal-body">
               <div class="card">
                 <div class="card-body">
 
                   <div class="form-group">
+                    <label for="exampleInputDivision">Division</label>
+                    <select type="text" v-model="SubDistrictForm.division_id" @change="getDistrict" class="form-control"
+                            id="exampleInputDivision">
+                      <option disabled selected>--Select--</option>
+                      <option v-for="(division,index) in DivisionList" :value="division.id">{{division.name}}</option>
+                    </select>
+                    <span class="mt-5 text-danger" v-if="AllError.division_id" v-text="AllError.division_id[0]"></span>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleInputDistrict">District</label>
+                    <select type="text" v-model="SubDistrictForm.district_id" class="form-control"
+                            id="exampleInputDistrict">
+                      <option disabled selected>--Select--</option>
+                      <option v-for="(district,index) in DistrictList" :value="district.id">{{district.name}}</option>
+                    </select>
+                    <span class="mt-5 text-danger" v-if="AllError.district_id" v-text="AllError.district_id[0]"></span>
+                  </div>
+
+                  <div class="form-group">
                     <label for="exampleInputName">Name</label>
-                    <input type="text" v-model="DivisionForm.name" @keyup="MakeDivisionSlug" class="form-control"
+                    <input type="text" v-model="SubDistrictForm.name" @keyup="MakeSubDistrictSlug" class="form-control"
                            id="exampleInputName">
                     <span class="mt-5 text-danger" v-if="AllError.name" v-text="AllError.name[0]"></span>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputSlug">Slug</label>
-                    <input type="text" v-model="DivisionForm.slug" class="form-control" id="exampleInputSlug" readonly>
+                    <input type="text" v-model="SubDistrictForm.slug" class="form-control" id="exampleInputSlug"
+                           readonly>
                     <span class="mt-5 text-danger" v-if="AllError.slug" v-text="AllError.slug[0]"></span>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputStatus">Is Coverage?</label>
-                    <select id="exampleInputStatus" class="form-control" v-model="DivisionForm.is_coverage_area">
+                    <select id="exampleInputStatus" class="form-control" v-model="SubDistrictForm.is_coverage_area">
                       <option value="" selected disabled>Select</option>
                       <option value="1">Yes</option>
                       <option value="0">No</option>
@@ -58,30 +79,52 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="menuEditLabel">Edit Division</h5>
+            <h5 class="modal-title" id="menuEditLabel">Edit Sub District</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
               aria-hidden="true">&times;</span></button>
           </div>
-          <form class="forms-sample" @submit.prevent="EditDivision">
+          <form class="forms-sample" @submit.prevent="EditSubDistrict">
             <div class="modal-body">
               <div class="card">
                 <div class="card-body">
 
                   <div class="form-group">
+                    <label for="editInputDivision">Division</label>
+                    <select type="text" v-model="EditSubDistrictForm.division_id" @change="getDistrict(true)"
+                            class="form-control"
+                            id="editInputDivision">
+                      <option disabled selected>--Select--</option>
+                      <option v-for="(division,index) in DivisionList" :value="division.id">{{division.name}}</option>
+                    </select>
+                    <span class="mt-5 text-danger" v-if="AllError.division_id" v-text="AllError.division_id[0]"></span>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="editInputDistrict">District</label>
+                    <select type="text" v-model="EditSubDistrictForm.district_id" class="form-control"
+                            id="editInputDistrict">
+                      <option disabled selected>--Select--</option>
+                      <option v-for="(district,index) in DistrictList" :value="district.id">{{district.name}}</option>
+                    </select>
+                    <span class="mt-5 text-danger" v-if="AllError.district_id" v-text="AllError.district_id[0]"></span>
+                  </div>
+
+                  <div class="form-group">
                     <label for="editInputName">Name</label>
-                    <input type="text" v-model="EditDivisionForm.name" @keyup="MakeMenuSlug($event,true)"
+                    <input type="text" v-model="EditSubDistrictForm.name" @keyup="MakeSubDistrictSlug($event,true)"
                            class="form-control"
                            id="editInputName">
                     <span class="mt-5 text-danger" v-if="AllError.name" v-text="AllError.name[0]"></span>
                   </div>
                   <div class="form-group">
                     <label for="editInputSlug">Slug</label>
-                    <input type="text" v-model="EditDivisionForm.slug" class="form-control" id="editInputSlug" readonly>
+                    <input type="text" v-model="EditSubDistrictForm.slug" class="form-control" id="editInputSlug"
+                           readonly>
                     <span class="mt-5 text-danger" v-if="AllError.slug" v-text="AllError.slug[0]"></span>
                   </div>
                   <div class="form-group">
                     <label for="editInputStatus">Is Coverage?</label>
-                    <select id="editInputStatus" class="form-control" v-model="EditDivisionForm.is_coverage_area">
+                    <select id="editInputStatus" class="form-control" v-model="EditSubDistrictForm.is_coverage_area">
                       <option value="" disabled>Select</option>
                       <option value="1">Yes</option>
                       <option value="0">No</option>
@@ -132,6 +175,8 @@
             <thead>
             <tr>
               <th>Sl No</th>
+              <th>Division</th>
+              <th>District</th>
               <th>Name</th>
               <th>Slug</th>
               <th>Is Coverage</th>
@@ -139,27 +184,29 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="(division,index) in DivisionList">
+            <tr v-for="(sub_district,index) in SubDistrictList">
               <th scope="row">{{index+1}}</th>
-              <td>{{division.name}}</td>
-              <td>{{division.slug}}</td>
+              <td>{{sub_district.division.name}}</td>
+              <td>{{sub_district.district.name}}</td>
+              <td>{{sub_district.name}}</td>
+              <td>{{sub_district.slug}}</td>
               <td>
-                <span v-if="division.is_coverage_area === true" class="badge badge-pill badge-success mb-1">Coverage Area</span>
+                <span v-if="sub_district.is_coverage_area === true" class="badge badge-pill badge-success mb-1">Coverage Area</span>
                 <span v-else class="badge badge-pill badge-danger mb-1">Not Coverage Area</span>
               </td>
               <td>
-                <button class="btn btn-danger" @click="deleteDivision(index,division.id)">
+                <button class="btn btn-danger" @click="deleteSubDistrict(index,sub_district.id)">
                   <font-awesome-icon icon="trash"/>
                 </button>
 
-                <button @click="statusChange(division.id)"
-                        :class="division.is_coverage_area === true ? 'btn btn-success' : 'btn btn-warning'">
-                  <font-awesome-icon v-if="division.is_coverage_area === true" icon="check-circle"/>
+                  <button @click="statusChange(sub_district.id)"
+                        :class="sub_district.is_coverage_area === true ? 'btn btn-success' : 'btn btn-warning'">
+                  <font-awesome-icon v-if="sub_district.is_coverage_area === true" icon="check-circle"/>
                   <font-awesome-icon v-else icon="times-circle"/>
                 </button>
 
                 <button class="btn btn-primary" data-toggle="modal"
-                        data-target="#menuEditModal" @click="viewDivision(division.id)">
+                        data-target="#menuEditModal" @click="viewSubDistrict(sub_district.id)">
                   <font-awesome-icon icon="pencil-alt"/>
                 </button>
               </td>
@@ -189,22 +236,28 @@
 
 <script>
   export default {
-    name: "DivisionComponent",
+    name: "DistrictComponent",
     data() {
       return {
-        DivisionForm: {
+        SubDistrictForm: {
+          division_id: '',
+          district_id: '',
           name: '',
           slug: '',
           is_coverage_area: ''
         },
-        EditDivisionForm: {
+        EditSubDistrictForm: {
           id: '',
+          division_id: '',
+          district_id: '',
           name: '',
           slug: '',
           is_coverage_area: ''
         },
         AllError: [],
         DivisionList: [],
+        DistrictList: [],
+        SubDistrictList: [],
         total_page: 0,
         search_key: '',
         limit: 5,
@@ -213,48 +266,48 @@
     },
     watch: {
       'search_key': function () {
-        this.GetDivision();
+        this.GetSubDistrict();
       },
       'limit': function () {
-        this.GetDivision();
+        this.GetSubDistrict();
       }
     },
     methods: {
       paginate: function (pageNum) {
         const _this = this;
-        _this.GetDivision(pageNum)
+        _this.GetSubDistrict(pageNum)
       },
-      GetDivision: function (page = 1) {
+      GetSubDistrict: function (page = 1) {
         const _this = this;
-        this.axios.get(basePath + "address/division?limit=" + _this.limit + "&page=" + page + "&q=" + _this.search_key)
+        this.axios.get(basePath + "address/sub_district?limit=" + _this.limit + "&page=" + page + "&q=" + _this.search_key)
           .then((response) => {
-            _this.DivisionList = response.data.results;
+            _this.SubDistrictList = response.data.results;
             _this.total_page = Math.ceil(response.data.count / _this.limit);
           })
           .catch((error) => {
             console.log(error)
           })
       },
-      AddDivision: function () {
+      AddSubDistrict: function () {
         const _this = this;
-        this.axios.post(basePath + "address/division/", _this.DivisionForm)
+        this.axios.post(basePath + "address/sub_district/", _this.SubDistrictForm)
           .then((response) => {
-            this.$toastr.success('New Division Added Successfully!', 'Success');
-            _this.GetDivision();
-            _this.Reset("demoModal", _this.DivisionForm);
+            this.$toastr.success('New Sub District Added Successfully!', 'Success');
+            _this.GetSubDistrict();
+            _this.Reset("demoModal", _this.SubDistrictForm);
           })
           .catch((error) => {
             _this.AllError = error.response.data.errors;
           })
       },
-      EditDivision: function () {
+      EditSubDistrict: function () {
         const _this = this;
-        this.axios.put(basePath + "address/division/" + _this.EditDivisionForm.id, _this.EditDivisionForm)
+        this.axios.put(basePath + "address/sub_district/" + _this.EditSubDistrictForm.id, _this.EditSubDistrictForm)
           .then((response) => {
             console.log(response);
-            this.$toastr.success('Division Updated Successfully!', 'Success');
-            _this.GetDivision();
-            _this.Reset("menuEditModal", _this.EditDivisionForm);
+            this.$toastr.success('Sub District Updated Successfully!', 'Success');
+            _this.GetSubDistrict();
+            _this.Reset("menuEditModal", _this.EditSubDistrictForm);
           })
           .catch((error) => {
             _this.AllError = error.response.data.errors;
@@ -268,18 +321,22 @@
           form[key] = '';
         });
       },
-      viewDivision: function (division_id) {
+      viewSubDistrict: function (sub_district_id) {
         const _this = this;
-        this.axios.get(basePath + "address/division/" + division_id)
+        this.axios.get(basePath + "address/sub_district/" + sub_district_id)
           .then((response) => {
-            _this.EditDivisionForm = response.data;
-            _this.EditDivisionForm.is_coverage_area = response.data.is_coverage_area === true ? 1 : 0;
+            console.log(response)
+            _this.EditSubDistrictForm = response.data;
+            _this.EditSubDistrictForm.division_id = response.data.division.id;
+            _this.getDistrict(true);
+            _this.EditSubDistrictForm.district_id = response.data.district.id;
+            _this.EditSubDistrictForm.is_coverage_area = response.data.is_coverage_area === true ? 1 : 0;
           })
           .catch((error) => {
             console.log(error)
           })
       },
-      deleteDivision: function (index, division_id) {
+      deleteSubDistrict: function (index, sub_district_id) {
         const _this = this;
         this.$swal.fire({
           title: 'Are you sure?',
@@ -290,11 +347,11 @@
           confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
           if (result.value) {
-            this.axios.delete(basePath + "address/division/" + division_id)
+            this.axios.delete(basePath + "address/sub_district/" + sub_district_id)
               .then((response) => {
                 console.log(response)
-                _this.DivisionList.splice(index, 1);
-                this.$swal.fire('Deleted!', 'Division Deleted Successfully', 'success');
+                _this.SubDistrictList.splice(index, 1);
+                this.$swal.fire('Deleted!', 'Sub District Deleted Successfully', 'success');
               })
               .catch((error) => {
                 console.log(error)
@@ -302,11 +359,11 @@
           }
         })
       },
-      statusChange: function (division_id) {
+      statusChange: function (sub_division_id) {
         const _this = this;
-        this.axios.patch(basePath + "address/division/status/" + division_id)
+        this.axios.patch(basePath + "address/sub_district/status/" + sub_division_id)
           .then((response) => {
-            _this.GetDivision();
+            _this.GetSubDistrict();
             if (response.data.type === true) {
               this.$toastr.success(response.data.message, 'Success');
             } else {
@@ -317,19 +374,40 @@
             console.log(error)
           })
       },
-      MakeDivisionSlug: function (event, is_update = false) {
+      MakeSubDistrictSlug: function (event, is_update = false) {
         const _this = this;
         if (is_update === true) {
-          _this.EditDivisionForm.slug = this.Slugify(event);
+          _this.EditSubDistrictForm.slug = this.Slugify(event);
         } else {
-          _this.DivisionForm.slug = this.Slugify(event);
+          _this.SubDistrictForm.slug = this.Slugify(event);
         }
-
+      },
+      getDivision: function () {
+        const _this = this;
+        this.axios.get(basePath + "address/all_division")
+          .then((response) => {
+            _this.DivisionList = response.data.results;
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      },
+      getDistrict: function (is_update = false) {
+        const _this = this;
+        let column = is_update === true ? _this.EditSubDistrictForm.division_id : _this.SubDistrictForm.division_id;
+        this.axios.get(basePath + "address/division_wise_district/" + column)
+          .then((response) => {
+            _this.DistrictList = response.data.results;
+          })
+          .catch((error) => {
+            console.log(error)
+          })
       }
     },
     created() {
       this.Loader();
-      this.GetDivision();
+      this.getDivision();
+      this.GetSubDistrict();
     }
   }
 </script>

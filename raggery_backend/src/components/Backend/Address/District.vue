@@ -174,6 +174,12 @@
                   <font-awesome-icon icon="trash"/>
                 </button>
 
+                <button @click="statusChange(district.id)"
+                        :class="district.is_coverage_area === true ? 'btn btn-success' : 'btn btn-warning'">
+                  <font-awesome-icon v-if="district.is_coverage_area === true" icon="check-circle"/>
+                  <font-awesome-icon v-else icon="times-circle"/>
+                </button>
+
                 <button class="btn btn-primary" data-toggle="modal"
                         data-target="#menuEditModal" @click="viewDistrict(district.id)">
                   <font-awesome-icon icon="pencil-alt"/>
@@ -321,6 +327,21 @@
               })
           }
         })
+      },
+      statusChange: function (district_id) {
+        const _this = this;
+        this.axios.patch(basePath + "address/district/status/" + district_id)
+          .then((response) => {
+            _this.GetDistrict();
+            if (response.data.type === true) {
+              this.$toastr.success(response.data.message, 'Success');
+            } else {
+              this.$toastr.warning(response.data.message, 'Success');
+            }
+          })
+          .catch((error) => {
+            console.log(error)
+          })
       },
       MakeDistrictSlug: function (event, is_update = false) {
         const _this = this;

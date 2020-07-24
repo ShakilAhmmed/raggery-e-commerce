@@ -63,12 +63,12 @@ class DivisionApi(APIView, PaginationHandlerMixin):
 	def patch(self, request, pk):
 		instance = get_object_or_404(Division, pk = pk)
 		response = {}
-		if instance.status:
-			instance.status = False
+		if instance.is_coverage_area:
+			instance.is_coverage_area = False
 			response['message'] = "Status Changed Into Inactive"
 			response['type'] = False
 		else:
-			instance.status = True
+			instance.is_coverage_area = True
 			response['message'] = "Status Changed Into Active"
 			response['type'] = True
 		instance.save()

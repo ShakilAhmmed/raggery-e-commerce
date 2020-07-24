@@ -4,8 +4,8 @@ from rest_framework.response import Response
 from rest_framework.status import (HTTP_200_OK, HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_202_ACCEPTED,
 								   HTTP_204_NO_CONTENT)
 
-from .models import District, Division
-from .serializers import DistrictSerializer
+from .models import District, Division, SubDistrict
+from .serializers import SubDistrictSerializer
 from backend_api.pagination import PaginationHandlerMixin, BasicPagination
 from django.db.models import Q
 
@@ -13,13 +13,13 @@ from django.db.models import Q
 # Create your views here.
 
 
-class DistrictApi(APIView, PaginationHandlerMixin):
+class SubDistrictApi(APIView, PaginationHandlerMixin):
 	pagination_class = BasicPagination
-	serializer_class = DistrictSerializer
+	serializer_class = SubDistrictSerializer
 
 	def get(self, request, pk = None):
 		if pk is None:
-			instance = District.objects.all()
+			instance = SubDistrict.objects.all()
 			filter_by = request.GET.get('q', None)
 			if filter_by is not None:
 				instance = instance.filter(
@@ -32,7 +32,7 @@ class DistrictApi(APIView, PaginationHandlerMixin):
 				serializer = self.serializer_class(instance, many = True)
 			return Response(serializer.data, status = HTTP_200_OK)
 		else:
-			instance = get_object_or_404(District, pk = pk)
+			instance = get_object_or_404(SubDistrict, pk = pk)
 			serializer = self.serializer_class(instance = instance)
 			return Response(serializer.data, status = HTTP_200_OK)
 
@@ -41,6 +41,7 @@ class DistrictApi(APIView, PaginationHandlerMixin):
 		response = {}
 		if serialize.is_valid():
 			serialize.division = get_object_or_404(Division, pk = request.data.get('division_id'))
+			serialize.district = get_object_or_404(District, pk = request.data.get('district_id'))
 			serialize.save()
 			response['data'] = serialize.data
 			response['status'] = HTTP_201_CREATED
@@ -50,7 +51,7 @@ class DistrictApi(APIView, PaginationHandlerMixin):
 		return Response(response, status = response['status'])
 
 	def put(self, request, pk):
-		instance = get_object_or_404(District, pk = pk)
+		instance = get_object_or_404(SubDistrict, pk = pk)
 		serialize = self.serializer_class(instance = instance, data = request.data)
 		response = {}
 		if serialize.is_valid():
@@ -63,7 +64,7 @@ class DistrictApi(APIView, PaginationHandlerMixin):
 		return Response(response, status = response['status'])
 
 	def patch(self, request, pk):
-		instance = get_object_or_404(District, pk = pk)
+		instance = get_object_or_404(SubDistrict, pk = pk)
 		response = {}
 		if instance.is_coverage_area:
 			instance.is_coverage_area = False
@@ -77,20 +78,12 @@ class DistrictApi(APIView, PaginationHandlerMixin):
 		return Response(response, status = HTTP_202_ACCEPTED)
 
 	def delete(self, request, pk):
-		instance = get_object_or_404(District, pk = pk)
+		instance = get_object_or_404(SubDistrict, pk = pk)
 		instance.delete()
 		response = {"message": "deleted"}
 		return Response(response, status = HTTP_204_NO_CONTENT)
 
 
-class GetAllDistrictApi(ListAPIView):
-	queryset = District.objects.all()
-	serializer_class = DistrictSerializer
-
-
-class GetDivisionWiseDistrictApi(ListAPIView):
-	serializer_class = DistrictSerializer
-
-	def get_queryset(self):
-		division = self.kwargs['division']
-		return District.objects.filter(division = division)
+class GetAllSubDistrictApi(ListAPIView):
+	queryset = SubDistrict.objects.all()
+	serializer_class = SubDistrictSerializer
