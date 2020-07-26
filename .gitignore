@@ -21,9 +21,26 @@ color_app/__pycache__/urls.cpython-36.pyc
 *.sln
 backend_api/menu_app/__pycache__/views.*.pyc
  backend_api/__pycache__/
-
-
-
+.installed.cfg
+bin
+develop-eggs
+dist
+downloads
+eggs
+parts
+src/*.egg-info
+lib
+lib64
+*.pyc
+*.pyo
+backend_api/*.pyc
+ backend_api/address_app/__pycache__/*.pyc
+ backend_api/address_app/__pycache__
+ !**/__pycache__/
+ !**/migrations/
+ backend_api/!**/__pycache__/
+ backend_api/!**/migrations/
+backend_api/subcategory_app/migrations/__pycache__/
 # Created by https://www.toptal.com/developers/gitignore/api/python,django,vuejs
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,django,vuejs
 

@@ -18,10 +18,10 @@
               <div class="card">
                 <div class="card-body">
 
-                  
+
                   <div class="form-group">
                     <label for="exampleInputCode">Code</label>
-                    <input type="color" v-model="ColorForm.code" class="form-control"  id="code-style" @click="SetColorData()">
+                    <input type="color" v-model="ColorForm.code" class="form-control"  id="code-style" @change="SetColorData()">
                     <span class="mt-5 text-danger" v-if="AllError.code" v-text="AllError.code[0]"></span>
 
                   </div>
@@ -148,7 +148,8 @@
         },
         AllError: [],
         ColorList: [],
-        total_page: 0 
+        total_page: 0,
+        limit: 5,
       }
     },
     methods: {
@@ -167,14 +168,14 @@
               console.log(error);
 
            })
-      
+
       },
       GetColor: function (page = 1) {
         const _this = this;
         this.axios.get(basePath + "color?page=" + page)
           .then((response) => {
             _this.ColorList = response.data.results;
-            _this.total_page = Math.ceil(response.data.count / perPage);
+            _this.total_page = Math.ceil(response.data.count / _this.limit);
           })
           .catch((error) => {
             console.log(error)
@@ -182,7 +183,7 @@
       },
       AddColor: function () {
         const _this = this;
-        if(_this.ColorForm.id == ''){
+        if(_this.ColorForm.id === ''){
           console.log(_this.ColorForm);
           this.axios.post(basePath + "color/", _this.ColorForm)
           .then((response) => {
@@ -213,7 +214,7 @@
       },
       viewColor: function (color_pk) {
         const _this = this;
-        if(color_pk == ''){
+        if(color_pk === ''){
 
          _this.Reset("demoModal", _this.ColorForm);
 
