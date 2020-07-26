@@ -35,6 +35,8 @@
                 <router-link to="/sub_category" class="menu-item">Sub Category</router-link>
                 <router-link to="/tree_view" class="menu-item">View</router-link>
                 <router-link to="/color" class="menu-item">Color</router-link>
+                <router-link to="/size" class="menu-item">Size</router-link>
+                <router-link to="/brand" class="menu-item">Brand</router-link>
               </div>
             </div>
 

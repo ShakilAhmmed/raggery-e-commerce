@@ -1,39 +1,31 @@
 <template>
-  <div id="color">
-    <button type="button" class="modal_button btn btn-primary" @click="viewColor(id='')" data-toggle="modal"
+  <div id="size">
+    <button type="button" class="modal_button btn btn-primary" @click="viewSize(id='')" data-toggle="modal"
             data-target="#demoModal">
-      Create Color
+      Create Size
     </button>
     <div class="modal fade" id="demoModal" tabindex="-1" role="dialog" aria-labelledby="demoModalLabel"
          aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="demoModalLabel">Create Color</h5>
+            <h5 class="modal-title" id="demoModalLabel">Create Size</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
               aria-hidden="true">&times;</span></button>
           </div>
-          <form class="forms-sample" @submit.prevent="AddColor">
+          <form class="forms-sample" @submit.prevent="AddSize">
             <div class="modal-body">
               <div class="card">
                 <div class="card-body">
-
-                  
                   <div class="form-group">
-                    <label for="exampleInputCode">Code</label>
-                    <input type="color" v-model="ColorForm.code" class="form-control"  id="code-style" @click="SetColorData()">
-                    <span class="mt-5 text-danger" v-if="AllError.code" v-text="AllError.code[0]"></span>
-
-                  </div>
-                   <div class="form-group">
                     <label for="exampleInputCode">Name</label>
-                    <input type="text" v-model="ColorForm.name" class="form-control" readonly >
+                    <input type="text" v-model="SizeForm.name" class="form-control"  >
                     <span class="mt-5 text-danger" v-if="AllError.name" v-text="AllError.name[0]"></span>
 
-                  </div>
+                  </div>    
                   <div class="form-group">
                     <label for="exampleInputStatus">Status</label>
-                    <select id="exampleInputStatus" class="form-control" v-model="ColorForm.status">
+                    <select id="exampleInputStatus" class="form-control" v-model="SizeForm.status">
                       <option value="" selected disabled>Select</option>
                       <option value="1">Active</option>
                       <option value="0">Inactive</option>
@@ -81,33 +73,31 @@
             <tr>
               <th>Sl No</th>
               <th>Name</th>
-              <th>Code</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
             </thead>
             <tbody>
-            <tr v-for="(color,index) in ColorList">
+            <tr v-for="(size,index) in SizeList">
               <th scope="row">{{index+1}}</th>
-              <td>{{color.name}}</td>
-              <td> <div  v-bind:style="{ background: color.code }" class="color-circle"></div></td>
+              <td>{{size.name}}</td>
               <td>
-                <span v-if="color.status === true" class="badge badge-pill badge-success mb-1">Active</span>
+                <span v-if="size.status === true" class="badge badge-pill badge-success mb-1">Active</span>
                 <span v-else class="badge badge-pill badge-danger mb-1">Inactive</span>
               </td>
               <td>
-                <button class="btn btn-danger" @click="DeleteColor(index,color.id)">
+                <button class="btn btn-danger" @click="DeleteSize(index,size.id)">
                   <font-awesome-icon icon="trash"/>
                 </button>
-                <button @click="statusChange(color.id)"
-                        :class="color.status === true ? 'btn btn-success' : 'btn btn-warning'">
-                  <font-awesome-icon v-if="color.status === true" icon="check-circle"/>
+                <button @click="statusChange(size.id)"
+                        :class="size.status === true ? 'btn btn-success' : 'btn btn-warning'">
+                  <font-awesome-icon v-if="size.status === true" icon="check-circle"/>
                   <font-awesome-icon v-else icon="times-circle"/>
                 </button>
 
 
                 <button class="btn btn-primary" data-toggle="modal"
-                        data-target="#demoModal" @click="viewColor(color.id)">
+                        data-target="#demoModal" @click="viewSize(size.id)">
                   <font-awesome-icon icon="pencil-alt"/>
                 </button>
               </td>
@@ -137,59 +127,45 @@
 
 <script>
   export default {
-    name: "ColorComponent",
+    name: "SizeComponent",
     data() {
       return {
-        ColorForm: {
+        SizeForm: {
           id: '',
           name: '',
-          code: '',
           status: ''
         },
         AllError: [],
-        ColorList: [],
+        SizeList: [],
         total_page: 0 
       }
     },
     methods: {
       paginate: function (pageNum) {
         const _this = this;
-        _this.GetColor(pageNum)
+        _this.GetSize(pageNum)
       },
-      SetColorData: function(){
-           const _this = this;
-           var color_code = _this.ColorForm.code.split('#')[1];
-           this.axios.get("https://www.thecolorapi.com/id?hex= " + color_code)
-           .then((response) => {
-            _this.ColorForm.name = response.data.name.value;
-           })
-           .catch((error) => {
-              console.log(error);
-
-           })
-      
-      },
-      GetColor: function (page = 1) {
+      GetSize: function (page = 1) {
         const _this = this;
-        this.axios.get(basePath + "color?page=" + page)
+        this.axios.get(basePath + "size?page=" + page)
           .then((response) => {
-            _this.ColorList = response.data.results;
+            _this.SizeList = response.data.results;
             _this.total_page = Math.ceil(response.data.count / perPage);
           })
           .catch((error) => {
             console.log(error)
           })
       },
-      AddColor: function () {
+      AddSize: function () {
         const _this = this;
-        if(_this.ColorForm.id == ''){
-          console.log(_this.ColorForm);
-          this.axios.post(basePath + "color/", _this.ColorForm)
+        if(_this.SizeForm.id == ''){
+          console.log(_this.SizeForm);
+          this.axios.post(basePath + "size/", _this.SizeForm)
           .then((response) => {
           console.log(response)
             this.$toastr.success('New Menu Added Successfully!', 'Success');
-            _this.GetColor();
-            _this.Reset("demoModal", _this.ColorForm);
+            _this.GetSize();
+            _this.Reset("demoModal", _this.SizeForm);
           })
           .catch((error) => {
           console.log(error);
@@ -199,11 +175,11 @@
         }
         else{
 
-          this.axios.put(basePath + "color/" + _this.ColorForm.id, _this.ColorForm)
+          this.axios.put(basePath + "size/" + _this.SizeForm.id, _this.SizeForm)
           .then((response) => {
-            this.$toastr.success('Color Updated Successfully!', 'Success');
-            _this.GetColor();
-            _this.Reset("demoModal", _this.ColorForm);
+            this.$toastr.success('Size Updated Successfully!', 'Success');
+            _this.GetSize();
+            _this.Reset("demoModal", _this.SizeForm);
           })
           .catch((error) => {
             _this.AllError = error.response.data.errors;
@@ -211,19 +187,19 @@
 
         }
       },
-      viewColor: function (color_pk) {
+      viewSize: function (size_pk) {
         const _this = this;
-        if(color_pk == ''){
+        if(size_pk == ''){
 
-         _this.Reset("demoModal", _this.ColorForm);
+         _this.Reset("demoModal", _this.SizeForm);
 
         }
         else{
-          _this.Reset("demoModal", _this.ColorForm);
-          this.axios.get(basePath + "color/" + color_pk)
+          _this.Reset("demoModal", _this.SizeForm);
+          this.axios.get(basePath + "size/" + size_pk)
           .then((response) => {
-            _this.ColorForm = response.data;
-            _this.ColorForm.status = response.data.status === true ? 1 : 0;
+            _this.SizeForm = response.data;
+            _this.SizeForm.status = response.data.status === true ? 1 : 0;
           })
           .catch((error) => {
             console.log(error)
@@ -240,7 +216,7 @@
 
       },
 
-      DeleteColor: function (index, color_pk) {
+      DeleteSize: function (index, size_pk) {
         const _this = this;
         this.$swal.fire({
           title: 'Are you sure?',
@@ -251,9 +227,9 @@
           confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
           if (result.value) {
-            this.axios.delete(basePath + "color/delete/" + color_pk)
+            this.axios.delete(basePath + "size/delete/" + size_pk)
               .then((response) => {
-                _this.ColorList.splice(index, 1);
+                _this.SizeList.splice(index, 1);
                 this.$swal.fire('Deleted!', 'Menu Deleted Successfully', 'success');
               })
               .catch((error) => {
@@ -262,11 +238,11 @@
           }
         })
       },
-      statusChange: function (color_pk) {
+      statusChange: function (size_pk) {
         const _this = this;
-        this.axios.patch(basePath + "color/status/" + color_pk)
+        this.axios.patch(basePath + "size/status/" + size_pk)
           .then((response) => {
-            _this.GetColor();
+            _this.GetSize();
             if (response.data.type === true) {
               this.$toastr.success(response.data.message, 'Success');
             } else {
@@ -282,7 +258,7 @@
 
     created() {
       this.Loader();
-      this.GetColor();
+      this.GetSize();
     }
   }
 </script>
