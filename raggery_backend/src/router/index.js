@@ -8,7 +8,8 @@ import SubCategoryComponent from "../components/Backend/SubCategory/SubCategoryC
 import TreeView from "../components/Backend/TreeView/TreeView";
 import Division from "../components/Backend/Address/Division";
 import District from "../components/Backend/Address/District";
-
+import BrandComponent from "../components/Backend/Brand/BrandComponent";
+import SizeComponent from "../components/Backend/Size/SizeComponent";
 Vue.use(Router);
 
 export default new Router({
@@ -30,7 +31,7 @@ export default new Router({
       meta: {
         "page_title": "Menu",
         "menu": "Settings",
-        "page_description": "Create Site Menu",
+        "page_description": "Create Site Menu",BrandComponent
       }
     },
     {
@@ -89,9 +90,33 @@ export default new Router({
       component: ColorComponent,
       meta: {
         "page_title": "Color",
-        "menu": "product",
+        "menu": "Product",
         "page_description": "Create Site Color",
       }
-    }
+      
+    },
+    {
+      path: "/brand",
+      name: "Brand",
+      component: BrandComponent,
+      meta: {
+        "page_title": "Brand",
+        "menu": "Product",
+        "page_description": "Create Brand",
+      }
+      
+    },
+    {
+      path: "/size",
+      name: "Size",
+      component: SizeComponent,
+      meta: {
+        "page_title": "Size",
+        "menu": "Product",
+        "page_description": "Create Size",
+      }
+      
+    },
+    
   ]
 });
