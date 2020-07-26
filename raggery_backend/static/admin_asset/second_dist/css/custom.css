@@ -319,3 +319,11 @@
     -webkit-font-smoothing: antialiased  !important;
     -moz-osx-font-smoothing: grayscale  !important;
 }
+#code-style{
+    height: 0px !important;
+}
+.color-circle{
+    border-radius: 20px;
+    height: 20px;
+    width: 20px;
+}
