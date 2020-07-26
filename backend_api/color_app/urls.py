@@ -2,7 +2,7 @@ from django.urls import path
 from .views import ColorApi 
 
 
-from django.urls import path
+
 
 urlpatterns = [
     path("", ColorApi.as_view()),
